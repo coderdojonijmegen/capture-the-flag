@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Calculator - CoderDojo</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+            color: #b3ff00;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            padding: 30px;
+            background-color: rgba(42, 42, 42, 0.9);
+            color: #b3ff00;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            position: relative;
+            z-index: 1; 
+        }
+
+        h1 {
+            color: #b3ff00;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        h4 {
+            color: #cfcfcf;
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        input[type=number] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: none;
+            background-color: #333;
+            color: #b3ff00;
+            font-size: 1rem;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #b3ff00;
+            color: #2a2a2a;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 15px;
+        }
+
+        button:hover {
+            background-color: #99cc00;
+        }
+
+        #r, #m {
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-top: 10px;
+            color: #b3ff00;
+        }
+
+        #hBtn {
+            background-color: #666;
+            color: #b3ff00;
+        }
+
+        #hBtn:disabled {
+            background-color: #444;
+            color: #999;
+            cursor: not-allowed;
+        }
+
+        /* Achtergrond met vallende neon letters */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            font-size: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            filter: blur(5px);
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px;
+            color: rgba(179, 255, 0, 0.7);
+            text-shadow: 0 0 10px rgba(179, 255, 0, 0.7);
+            animation: drop linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Ontgrendel de Geheime Kluis!</h1>
+        <h4>Gebruik de calculator en vind de geheime waarde om de kluis te openen. Na 7 pogingen krijg je een hint!</h4>
+
+        <input type="number" id="a" placeholder="Getal 1">
+        <input type="number" id="b" placeholder="Getal 2">
+        <button onclick="calculate()">Bereken</button>
+
+        <p id="r"></p>
+        <p id="m"></p>
+        <button id="hBtn" onclick="showHint()" disabled>Hint</button>
+    </div>
+
+    <script>
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 100;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 20 + 20 + 'px';
+                letter.style.animationDuration = Math.random() * 3 + 2 + 's';
+                letter.style.animationDelay = Math.random() * 5 + 's';
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters();
+
+        let attempts = 0;
+
+        const encodedAnswer = "MjE=";
+        const encodedFlagParts = ["Rmxh", "Z3tN", "YXVkLU", "1hcml", "0X2lzX", "zIxX2", "phYXJ", "fb3Vk", "fQ=="];
+        const encodedHint = "SG9lIG91ZCBpcyBNYXVkLU1hcml0Pw==";
+
+        function decodeBase64(encodedString) {
+            return atob(encodedString);
+        }
+
+        function calculate() {
+            const n1 = parseInt(document.getElementById("a").value);
+            const n2 = parseInt(document.getElementById("b").value);
+            const result = n1 + n2;
+            document.getElementById("r").innerText = "Resultaat: " + result;
+
+            const expectedAnswer = parseInt(decodeBase64(encodedAnswer));
+
+            if (result === expectedAnswer) {
+                const decodedFlag = atob(encodedFlagParts.join(""));
+                document.getElementById("m").innerText = decodedFlag;
+            } else {
+                document.getElementById("m").innerText = "Probeer een andere combinatie.";
+            }
+
+            attempts++;
+            if (attempts >= 7) {
+                document.getElementById("hBtn").removeAttribute("disabled");
+            }
+        }
+
+        function showHint() {
+            const hint = decodeBase64(encodedHint);
+            alert("Hint: " + hint);
+        }
+    </script>
+</body>
+</html>
