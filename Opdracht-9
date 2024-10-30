@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inlogveld</title>
+    <style>
+        /* Algemene hacker-stijl en achtergrond */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #121212;
+            color: #00ff00;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            overflow: auto; /* Scrollen inschakelen */
+        }
+
+        /* Container styling met een lichte neon glow */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #1b1b1b;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            margin-bottom: 30px;
+            position: relative; /* Houdt de container boven de achtergrond */
+            z-index: 1; /* Zorgt dat de container boven de achtergrond letters staat */
+        }
+
+        /* Headerstijl met subtiele glow */
+        .container h1 {
+            color: #00ff00;
+            font-size: 1.8em;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+        }
+
+        /* Paragraafstijl met lichtgroene kleur */
+        .container p {
+            color: #b3ffb3;
+            font-size: 1.1em;
+            line-height: 1.6em;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        /* Inputvelden met matrix-thema */
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #000;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            font-size: 1em;
+        }
+
+        /* Knoppen in hacker-stijl */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            background-color: #00cc00;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.1em;
+            transition: all 0.3s;
+            text-shadow: 0 0 8px rgba(0, 255, 0, 0.8);
+        }
+
+        /* Hover-effect voor knoppen */
+        button:hover {
+            background-color: #009900;
+        }
+
+        /* Berichtweergave met een licht matrix-glow */
+        #e {
+            padding: 12px;
+            border-radius: 5px;
+            background-color: #222;
+            color: #00ff00;
+            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+            font-family: 'Courier New', monospace;
+            text-align: left;
+        }
+
+        /* Achtergrond met vallende neonletters */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* Zorgt ervoor dat de achtergrond onder de container staat */
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px;
+            color: rgba(0, 255, 0, 0.7);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+            filter: blur(1px); /* Blur effect voor de letters */
+            animation: drop linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div> <!-- Container voor de achtergrondletters -->
+
+    <div class="container">
+        <h1>Wat is SQL-injectie?</h1>
+        <p>Stel je voor dat je een supergeheime kluis hebt met al je belangrijke spullen erin. Om de kluis te openen, moet je een speciale code invoeren. Maar wat als iemand een slimme truc bedenkt om de kluis te laten denken dat de code altijd klopt, zonder de echte code te weten?</p>
+        <p>Dat is eigenlijk wat SQL-injectie is. Het is een truc die hackers gebruiken om websites voor de gek te houden en toegang te krijgen tot geheime informatie, zoals gebruikersnamen en wachtwoorden.</p>
+        <p>Ze doen dit door speciale code in te voeren in de plek waar je normaal gesproken je gebruikersnaam en wachtwoord zou typen. Deze speciale code vertelt de website om alles te laten zien, alsof de hacker de echte gebruiker is.</p>
+        <p>Hackers gebruiken SQL-injectie om toegang te krijgen tot gevoelige informatie en soms zelfs om de controle over een hele website over te nemen. Het is dus heel belangrijk voor websitebouwers om hun websites te beschermen tegen dit soort aanvallen.</p>
+    </div>
+
+    <div class="container">
+        <h1>Inlogveld</h1>
+        <form id="a">
+            <input type="text" id="b" placeholder="Gebruikersnaam" value="gebruikersnaam">
+            <input type="password" id="c" placeholder="Wachtwoord">
+            <button type="button" onclick="d()">Inloggen</button>
+        </form>
+        <div id="e"></div>
+    </div>
+
+    <script>
+        var f = 0;
+        var g = "RmxhZ3tTUUxfaW5qZWN0aW9uX1N1Y2Nlc3N9";
+        var h = "MT0x";
+        var i = "JyBPUiAnMSc9JzEn";
+
+        function j(k) {
+            return atob(k);
+        }
+
+        function d() {
+            var l = document.getElementById("b").value.trim();
+            var m = document.getElementById("c").value.trim();
+            var n = document.getElementById("e");
+            n.innerHTML = "";
+
+            if (m === j(i)) {
+                n.innerHTML = j(g);
+            } else {
+                n.innerHTML = "ERROR SqlCommand sqlc = new SqlCommand(\"SELECT Record FROM Table_Users WHERE Username='" + l + "' AND Password='" + m + "'\");";
+            }
+
+            f++;
+
+            if (f === 7) {
+                o();
+            }
+        }
+
+        function o() {
+            var p = document.createElement('button');
+            p.textContent = 'Hint';
+            p.onclick = function() {
+                alert('Hint: ' + j(h));
+            };
+            document.querySelector('.container:last-of-type').appendChild(p); // Voeg de hintknop toe aan de laatste container
+        }
+
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 150;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 15 + 10 + 'px';
+                letter.style.animationDuration = (Math.random() * 5 + 3) + 's'; // Duur van de animatie
+                letter.style.animationDelay = (Math.random() * 10) + 's'; // Vertraging voor de animatie
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters(); // Genereer de vallende letters
+    </script>
+</body>
+</html>
