@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netwerkanalyse CTF</title>
+    <style>
+        /* Algemene achtergrond en tekststijl */
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #000;
+            color: #0f0;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            animation: background-flicker 3s infinite alternate;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Flicker effect voor achtergrond */
+        @keyframes background-flicker {
+            0%, 100% { background-color: #000; }
+            50% { background-color: #030303; }
+        }
+
+        /* Achtergrond met vallende neonletters */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            font-size: 20px;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px;
+            color: rgba(15, 255, 15, 0.7);
+            text-shadow: 0 0 10px rgba(15, 255, 15, 0.7);
+            animation: drop linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Header styling */
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #0f0;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Paragraaf styling */
+        p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #0f0;
+            text-shadow: 0 0 5px #0f0;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Knoppen styling */
+        button {
+            padding: 12px 24px;
+            border: 2px solid #0f0;
+            border-radius: 5px;
+            background-color: #000;
+            color: #0f0;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-shadow: 0 0 10px #0f0;
+            z-index: 1;
+            position: relative;
+        }
+
+        button:hover {
+            background-color: #0a0;
+            border-color: #0a0;
+            color: #fff;
+        }
+
+        /* Invoer- en outputstijl */
+        #x {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #000;
+            border: 2px solid #0f0;
+            color: #0f0;
+            font-size: 1em;
+            text-align: center;
+            z-index: 1;
+            position: relative;
+        }
+
+        /* Resultaatvenster */
+        #y {
+            padding: 15px;
+            border-radius: 5px;
+            background-color: #111;
+            color: #0f0;
+            text-align: left;
+            font-family: 'Courier New', monospace;
+            font-size: 1em;
+            margin-top: 20px;
+            max-height: 250px;
+            overflow-y: auto;
+            box-shadow: 0 0 10px #0f0;
+            z-index: 1;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <h1>Netwerkanalyse</h1>
+    <p>In deze opdracht gaan we poorten scannen om verdachte activiteiten te vinden.</p>
+    <p>Wat zijn poorten? Poorten zijn eindpunten van communicatie in een netwerk.</p>
+    <p>Voer hieronder het poortnummer in dat je wilt scannen:</p>
+
+    <form id="z">
+        <input type="number" id="x" placeholder="Voer poortnummer in">
+        <button type="button" onclick="a()">Scan</button>
+        <button type="button" id="b" disabled onclick="c()">Hint</button>
+    </form>
+    
+    <div id="y"></div>
+
+    <script>
+        var d = 0; 
+        var e = "RmxhZ3tObWFwX3NjYW59".split("").reverse().join(""); 
+        var f = "QmV2ZWlsaWdkIHN1cmZlbg==".split("").reverse().join(""); 
+
+        function g(h) { return atob(h.split("").reverse().join("")); }
+
+        function a() {
+            var i = document.getElementById("x").value.trim();
+            var j = document.getElementById("y");
+            j.innerHTML = "";
+            var k = "";
+
+            if (i === "344".split("").reverse().join("")) {
+                k += "Proto  Local Address          Foreign Address        State\n";
+                k += "TCP    8.1.0.0:579            CBA-2F-8588:0          LISTENING\n";
+                k += "Proto  Local Address          Foreign Address        State\n";
+                k += "Goed gedaan! Hier is je vlag: " + g(e);
+            } else {
+                k += "Proto  Local Address          Foreign Address        State\n";
+                k += "TCP    8.1.0.0:579            CBA-2F-8588:0          LISTENING\n";
+                k += "Helaas, geen verdachte activiteiten gevonden op poort " + i;
+            }
+
+            var l = k.split("\n");
+            m(l);
+
+            d++; 
+
+            if (d === 7) {
+                document.getElementById("b").removeAttribute("disabled");
+            }
+        }
+
+        function m(n) {
+            var j = document.getElementById("y");
+            j.innerHTML = "";
+            var o = 0;
+            function p() {
+                if (o < n.length) {
+                    j.innerHTML += n[o] + "<br>";
+                    o++;
+                    setTimeout(p, 500); 
+                }
+            }
+            p();
+        }
+
+        function c() {
+            alert("Hint: " + g(f));
+        }
+
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 200;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 15 + 10 + 'px';
+                letter.style.animationDuration = Math.random() * 5 + 3 + 's';
+                letter.style.animationDelay = Math.random() * 10 + 's';
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters();
+    </script>
+</body>
+</html>
