@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vind de Verborgen Vlag</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Donkere achtergrond voor een dramatisch effect */
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+            color: #f0f0f0; /* Lichtere tekst voor beter contrast */
+            overflow: hidden; /* Voorkomt scrollen door vallende letters */
+        }
+        h1 {
+            color: #00ff00; /* Groene kleur voor de titel */
+            margin-bottom: 20px;
+            font-size: 2.5em; /* Grotere titel */
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Zachte schaduw voor diepte */
+        }
+        p {
+            font-size: 18px;
+            color: #dddddd; /* Lichtere kleur voor de tekst */
+            margin: 0 0 20px; /* Ruimte onder de paragraaf */
+        }
+        .hint {
+            font-style: italic;
+            color: #28a745; /* Groene hint */
+            font-size: 1.2em; /* Grotere hint voor nadruk */
+        }
+        .container {
+            max-width: 600px; /* Max breedte voor betere leesbaarheid */
+            margin: 0 auto; /* Centraal uitlijnen */
+            padding: 20px;
+            background-color: #1e1e1e; /* Donkere achtergrond voor inhoud */
+            border-radius: 8px; /* Ronde hoeken */
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Donkere schaduw voor diepte */
+            position: relative; /* Voor positionering van letters */
+            z-index: 1; /* Zorgt ervoor dat de container boven de achtergrond staat */
+        }
+        .footer {
+            margin-top: 40px; /* Ruimte boven de footer */
+            font-size: 14px; /* Kleinere tekst voor de footer */
+            color: #888; /* Lichtere kleur voor de footer */
+        }
+
+        /* Achtergrond met vallende neonletters */
+        .background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0; /* Zorgt ervoor dat de achtergrond onder de container staat */
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px;
+            color: rgba(0, 255, 0, 0.7);
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.7);
+            filter: blur(1px); /* Blur effect voor de letters */
+            animation: drop linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div> <!-- Container voor de achtergrondletters -->
+    
+    <div class="container">
+        <h1>Vind de Verborgen Vlag</h1>
+        <!-- Flag{Bedankt_voor_het_spelen_van_de_Coderdojo_CTF} -->
+        <p>Zoek naar de verborgen vlag.</p>
+        <p class="hint">Tip: Kijk goed om je heen!</p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; 2024 Coderdojo. Alle rechten voorbehouden.</p>
+    </div>
+
+    <script>
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 150;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 15 + 10 + 'px';
+                letter.style.animationDuration = (Math.random() * 5 + 3) + 's'; // Duur van de animatie
+                letter.style.animationDelay = (Math.random() * 10) + 's'; // Vertraging voor de animatie
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters(); // Genereer de vallende letters
+    </script>
+</body>
+</html>
