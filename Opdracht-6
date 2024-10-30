@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulier Manipulatie</title>
+    <style>
+        /* Algemene pagina-styling */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+            color: #b3ff00;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Container voor inhoud */
+        .container {
+            background-color: rgba(42, 42, 42, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Koptekst styling */
+        h1 {
+            font-size: 2rem;
+            color: #b3ff00;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        h4 {
+            font-size: 1rem;
+            color: #b3ff00;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        /* Flag styling */
+        .flag {
+            font-family: 'Courier New', Courier, monospace;
+            color: #b3ff00;
+            background-color: #2a2a2a;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(179, 255, 0, 0.5);
+            display: inline-block;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+        }
+
+        /* Knoppen styling */
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            background-color: #b3ff00;
+            color: #2a2a2a;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            max-width: 180px;
+        }
+
+        button:hover {
+            background-color: #99cc00;
+        }
+
+        /* Paragraaf styling */
+        p {
+            color: #b3ff00;
+            font-size: 0.95em;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Hint styling */
+        .hint {
+            font-size: 0.9em;
+            color: #99cc00;
+            margin-top: 20px;
+            font-weight: bold;
+            font-style: italic;
+        }
+
+        /* Achtergrond met vallende neon letters */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0; 
+            overflow: hidden; 
+            font-size: 20px; 
+            white-space: nowrap; 
+            filter: blur(5px); 
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px; 
+            color: rgba(179, 255, 0, 0.7); 
+            text-shadow: 0 0 10px rgba(179, 255, 0, 0.7); 
+            animation: drop linear infinite; 
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Een Cadeautje van de Coderdojo! Hier heb je een gratis Flag!</h1>
+        <div id="f" class="flag"></div>
+        <h4>Hmmm er lijkt iets niet helemaal goed te zijn met de flag. Dit komt omdat de flag in een specifieke code is geschreven. Kan jij achterhalen welke code dit is?</h4>
+        <h4>Caesar-cijfer:</h4>
+        <p>Een Caesar-cijfer is een eenvoudig coderingssysteem waarbij elke letter in de tekst wordt verschoven met een vast aantal posities in het alfabet.</p>
+        <p>Voorbeeld: De tekst "Hallo" kan worden gecodeerd naar "Kdoor" met een verschuiving van 3. Decodeer dit om de originele tekst te zien.</p>
+
+        <h4>Waarom hackers encryptie gebruiken:</h4>
+        <p>Encryptie wordt door hackers gebruikt om gevoelige informatie te beschermen tegen ongeautoriseerde toegang.</p>
+
+        <button onclick="s()">Hint</button>
+        <div class="hint"></div>
+    </div>
+
+    <script>
+        const a = "SW9kaitTaXJoX2dkd19sdl95aGhvX3dob29ocX0=";
+        const b = "MyBzdGFwamVzIG5hYXIgdm9vcg==";
+        
+        function c(d) { return atob(d); }
+
+        document.getElementById("f").innerText = c(a);
+
+        function s() { alert("Hint: " + c(b)); }
+
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 100;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 20 + 20 + 'px';
+                letter.style.animationDuration = Math.random() * 3 + 2 + 's';
+                letter.style.animationDelay = Math.random() * 5 + 's';
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters();
+    </script>
+</body>
+</html>
