@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT</title>
+    <style>
+        /* Algemene pagina-styling */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+            color: #b3ff00;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Container voor inhoud */
+        .container {
+            background-color: rgba(42, 42, 42, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Kopteksten styling */
+        h1 {
+            font-size: 2.2rem;
+            color: #b3ff00;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        p {
+            font-size: 1rem;
+            color: #b3ff00;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Input veld styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #b3ff00;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            border-color: #b3ff00;
+            outline: none;
+            box-shadow: 0 0 8px rgba(179, 255, 0, 0.2);
+        }
+
+        /* Knoppen styling */
+        button {
+            padding: 12px 24px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #b3ff00;
+            color: #2a2a2a;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 45%;
+            max-width: 180px;
+        }
+
+        button:hover {
+            background-color: #99cc00;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Bericht styling */
+        #msg {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #b3ff00;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        /* Achtergrond met vallende neon letters */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0; 
+            overflow: hidden; 
+            font-size: 20px; 
+            white-space: nowrap; 
+            filter: blur(5px); 
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px; 
+            color: rgba(179, 255, 0, 0.7); 
+            text-shadow: 0 0 10px rgba(179, 255, 0, 0.7); 
+            animation: drop linear infinite; 
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>OSINT</h1>
+        <p>Welkom! OSINT staat voor Open Source Intelligence. Dit betekent het verzamelen en analyseren van informatie
+            uit openbare bronnen.</p>
+        <p>Hackers gebruiken OSINT om informatie te verzamelen over doelwitten, zoals personen, bedrijven, of
+            organisaties, om zwakke plekken te vinden en aanvallen te plannen.</p>
+        <p>Wil je het zelf proberen? Zoek op wie bij CoderDojo Nijmegen de elektrotechnicus is:</p>
+        <form id="form">
+            <input type="text" id="inp" placeholder="Typ hier de naam">
+            <div>
+                <button type="button" onclick="chk()">Zoeken</button>
+                <button type="button" onclick="hnt()" id="hntBtn" disabled>Hint</button>
+            </div>
+        </form>
+        <div id="msg"></div>
+    </div>
+
+    <script>
+        var at = 0;
+        const ca = "YmFz";
+        const fg = "RmxhZ3tNZW50b3JfQmFzX2lzX2FhcmRpZ30=";
+        const ht = "SGViIGplIGRlIHdlYnNpdGUgdmFuIENvZGVyZG9qbyBhbCBiZWtla2VuPw==";
+        const msgEnc = "R29lZCBnZWRhYW4hIEJhcyBpcyBpbmRlcmRhYWQgZWxla3Ryb3RlY2huaWN1cyBnZXdlZXN0LiBIaWVyIGlzIGRlIHZsYWc6";
+
+        function dcd(e) {
+            return atob(e);
+        }
+
+        function chk() {
+            var ui = document.getElementById("inp").value.trim().toLowerCase();
+            var me = document.getElementById("msg");
+            var hb = document.getElementById("hntBtn");
+            me.innerHTML = "";
+
+            if (ui === dcd(ca)) {
+                me.innerText = dcd(msgEnc) + " " + dcd(fg);
+                me.style.backgroundColor = "#2a2a2a";
+                me.style.color = "#b3ff00";
+            } else {
+                me.innerText = "Probeer het opnieuw.";
+                me.style.backgroundColor = "#f8d7da";
+                me.style.color = "#721c24";
+                at++;
+                if (at >= 7) {
+                    hb.disabled = false;
+                }
+            }
+        }
+
+        function hnt() {
+            alert(dcd(ht));
+        }
+
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 100;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 20 + 20 + 'px';
+                letter.style.animationDuration = Math.random() * 3 + 2 + 's';
+                letter.style.animationDelay = Math.random() * 5 + 's';
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters();
+    </script>
+</body>
+
+</html>
