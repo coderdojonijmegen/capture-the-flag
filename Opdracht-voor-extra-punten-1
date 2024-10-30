@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: 'Courier New', Courier, monospace; /* Typische hacker-lettertype */
+            background-color: black; /* Achtergrond zwart voor contrast */
+            color: #b3ff00; /* Groene tekst voor hacker-thema */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative; /* Voor positionering van de achtergrond */
+        }
+
+        .container {
+            background-color: rgba(42, 42, 42, 0.9); /* Donkere achtergrond voor de container */
+            border-radius: 12px; /* Grotere hoeken voor een vloeiendere look */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Zachte schaduw voor diepte */
+            padding: 20px;
+            text-align: center;
+            max-width: 350px;
+            z-index: 1; /* Voor de container bovenop de achtergrond */
+        }
+
+        .container h1,
+        .container h2 {
+            margin-bottom: 20px;
+            color: #b3ff00; /* Groene kleur voor titels */
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 700;
+            color: #b3ff00;
+            text-align: left;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #555; /* Donkerdere rand */
+            border-radius: 4px; /* Hoekrondingen voor invoervelden */
+            background-color: #333; /* Achtergrondkleur voor inputvelden */
+            color: #b3ff00; /* Groene tekst in de invoervelden */
+            box-sizing: border-box; /* Zorgt ervoor dat padding wordt meegeteld in de breedte */
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #b3ff00; /* Groene achtergrond voor knoppen */
+            color: #2a2a2a; /* Donkere tekst voor knoppen */
+            border: none;
+            border-radius: 4px; /* Hoekrondingen voor knoppen */
+            cursor: pointer;
+            transition: background-color 0.3s; /* Vloeiende overgang */
+            font-weight: bold; /* Verdikte tekst voor knoppen */
+        }
+
+        button:hover {
+            background-color: #99cc00; /* Donkerdere groene kleur bij hover */
+        }
+
+        p#msg {
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold; /* Verdikte tekst voor meldingen */
+            color: #dc3545; /* Kleur voor foutmeldingen */
+        }
+
+        .hide {
+            display: none; /* Verborgen element voor hints */
+        }
+
+        /* Achtergrond met vallende neon letters */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0; /* Achtergrond laag */
+            overflow: hidden; /* Zorg ervoor dat het niet overlapt */
+            font-size: 20px; /* Grootte van de letters */
+            white-space: nowrap; /* Geen afbreking */
+            filter: blur(5px); /* Blur-effect voor achtergrond */
+        }
+
+        /* Random letters */
+        .letter {
+            position: absolute;
+            top: -50px; /* Begin boven de pagina */
+            color: rgba(179, 255, 0, 0.7); /* Neon groene kleur voor letters */
+            text-shadow: 0 0 10px rgba(179, 255, 0, 0.7); /* Neon effect */
+            animation: drop linear infinite; /* Laat letters vallen */
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Login</h1>
+        <h2>Het is belangrijk dat je een sterk wachtwoord kiest, anders is deze namelijk makkelijk te raden.</h2>
+        <form id="lgForm" onsubmit="return false;">
+            <label for="usr">Gebruikersnaam:</label>
+            <input type="text" id="usr" placeholder="Voer je gebruikersnaam in"><br>
+            <label for="pwd">Wachtwoord:</label>
+            <input type="password" id="pwd" placeholder="Voer je wachtwoord in"><br>
+            <button type="button" onclick="chkPwd()">Login</button>
+        </form>
+        <p id="msg"></p>
+        <button class="hide" id="hntBtn" onclick="shwHnt()">Hint</button>
+    </div>
+
+    <script>
+        var eUsr = "dmlzc2Vu", ePwd = "bWluaSBjYW1wZXI=", eHnt = "RGUgZ2VicnVpa2Vyc25hYW0gaXMgZWVuIGhvYmJ5IHZhbiBNYXVkLU1hcml0IGVuIGhldCB3YWNodHdvb3JkIGlzIGVlbiBob2JieSB2YW4gT3NjYXI=", eFlg = "RmxhZ3tFeHRyYV9wdW50ZW5fIX0=";
+        
+        function dcdB64(e) {
+            return atob(e);
+        }
+        
+        var atmp = 0, hntBtnClk = false;
+
+        function chkPwd() {
+            var u = document.getElementById("usr").value,
+                p = document.getElementById("pwd").value;
+            if (u === dcdB64(eUsr) && p === dcdB64(ePwd)) {
+                document.getElementById("msg").innerText = dcdB64(eFlg);
+            } else {
+                atmp++;
+                document.getElementById("msg").innerText = "Onjuist wachtwoord. Probeer het opnieuw.";
+                if (atmp >= 7 && !hntBtnClk) {
+                    document.getElementById("hntBtn").classList.remove("hide");
+                }
+            }
+        }
+        
+        function shwHnt() {
+            alert(dcdB64(eHnt));
+            hntBtnClk = true;
+        }
+
+        // Genereren van vallende letters
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // Karakterset
+            const background = document.querySelector('.background');
+            const numberOfLetters = 100; // Aantal vallende letters
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length)); // Kies een willekeurige letter
+                letter.style.left = Math.random() * 100 + 'vw'; // Willekeurige positie horizontaal
+                letter.style.fontSize = Math.random() * 20 + 20 + 'px'; // Willekeurige grootte
+                letter.style.animationDuration = Math.random() * 3 + 2 + 's'; // Willekeurige valduur
+                letter.style.animationDelay = Math.random() * 5 + 's'; // Willekeurige vertraging
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters(); // Start het genereren van letters
+    </script>
+</body>
+</html>
