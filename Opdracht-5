@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wayback Machine Challenge</title>
+    <style>
+        /* Algemene stijl voor donkere thema */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+            color: #b3ff00;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Achtergrond vallende letters */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            font-size: 20px;
+            white-space: nowrap;
+            filter: blur(5px);
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px;
+            color: rgba(179, 255, 0, 0.7);
+            text-shadow: 0 0 10px rgba(179, 255, 0, 0.7);
+            animation: drop linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+
+        /* Container voor de inhoud */
+        .container {
+            background-color: rgba(42, 42, 42, 0.9);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #b3ff00;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        p, label {
+            font-size: 1rem;
+            color: #b3ff00;
+            margin-bottom: 20px;
+        }
+
+        /* Formulierstijl */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            background-color: #333;
+            color: #b3ff00;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            border-color: #b3ff00;
+            outline: none;
+            box-shadow: 0 0 8px rgba(179, 255, 0, 0.2);
+        }
+
+        button {
+            padding: 12px 24px;
+            margin: 5px;
+            border: none;
+            border-radius: 4px;
+            background-color: #b3ff00;
+            color: #2a2a2a;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            width: 45%;
+            max-width: 180px;
+        }
+
+        button:hover {
+            background-color: #99cc00;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        #msg {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #b3ff00;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Dat is echt wayyyyyback.....</h1>
+        <p>Er zijn veel websites op het internet, zoals het nieuws op NOS. Wist je dat je met de Wayback Machine kunt kijken hoe websites er vroeger uitzagen?</p>
+        <p>Hackers gebruiken de Wayback Machine soms om oude versies van websites te vinden die kwetsbaar kunnen zijn voor bepaalde aanvallen.</p>
+        <p>Je kunt de Wayback Machine vinden op <a href="https://web.archive.org/" style="color: #b3ff00; text-decoration: underline;">web.archive.org</a>.</p>
+        <p>Voor deze vlag, zoek het nieuwsbericht dat op 9 februari 2010 om 20:51 uur is gepost.</p>
+
+        <form id="newsForm">
+            <label for="newsInput">Letterlijke tekst van het nieuwsbericht:</label>
+            <input type="text" id="newsInput" name="newsInput">
+            <br>
+            <button type="button" onclick="f1()">Controleer</button>
+            <button type="button" id="hb" onclick="f2()" disabled>Hint</button>
+        </form>
+
+        <p id="msg"></p>
+    </div>
+
+    <script>
+        var a = 0;
+        const b = "SnVtYm8gd2lsIFN1cGVyIGRlIEJvZXIgb3Zlcm5lbWVu";
+        const c = "RmxhZ3tXYXliYWNrX01hY2hpbmVfb250aHVsdF9nZWhlaW1lbn0=";
+        const d = "SGludDogRGUgSnVtYm8gd2lsIGdyYWFnIGlldHMgZG9lbi4gV2F0IHdpbHQgZGUgSnVtYm8gZG9lbg==";
+
+        function e(f) {
+            return atob(f);
+        }
+
+        function f1() {
+            var g = document.getElementById("newsInput").value.trim();
+            var h = document.getElementById("msg");
+            var i = document.getElementById("hb");
+            if (g === e(b)) {
+                h.innerText = "Goed gedaan! Hier is je vlag: " + e(c);
+                h.style.backgroundColor = "#2a2a2a";
+                h.style.color = "#b3ff00";
+            } else {
+                h.innerText = "Helaas, probeer het nog eens!";
+                h.style.backgroundColor = "#f8d7da";
+                h.style.color = "#721c24";
+                a++;
+                if (a >= 7) {
+                    i.removeAttribute("disabled");
+                }
+            }
+        }
+
+        function f2() {
+            alert(e(d));
+        }
+
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 100;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 20 + 20 + 'px';
+                letter.style.animationDuration = Math.random() * 3 + 2 + 's';
+                letter.style.animationDelay = Math.random() * 5 + 's';
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters();
+    </script>
+</body>
+</html>
