@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brute Force CTF</title>
+    <style>
+        /* Algemene styling */
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: black;
+            color: #b3ff00;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Container styling */
+        .container {
+            max-width: 400px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 25px rgba(0, 255, 0, 0.1);
+            text-align: center;
+            animation: fadeIn 1s ease;
+            z-index: 1;
+        }
+
+        /* Fade-in animatie */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Header styling */
+        h1 {
+            font-size: 1.8em;
+            color: #b3ff00;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Paragraaf styling */
+        p {
+            color: #b3ff00;
+            font-size: 0.95em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+
+        /* Inputvelden styling */
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #4caf50;
+            background-color: #2a2a2a;
+            color: #b3ff00;
+            transition: box-shadow 0.3s;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            box-shadow: 0 0 5px rgba(179, 255, 0, 0.5);
+            border-color: #b3ff00;
+        }
+
+        /* Knop styling */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            background-color: #b3ff00;
+            color: #2a2a2a;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.1s;
+            box-shadow: 0 5px 12px rgba(179, 255, 0, 0.2);
+        }
+
+        button:hover {
+            background-color: #99cc00;
+            transform: translateY(-2px);
+        }
+
+        /* Bericht styling */
+        #message {
+            padding: 15px;
+            border-radius: 6px;
+            background-color: #2a2a2a;
+            color: #b3ff00;
+            margin-top: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(179, 255, 0, 0.1);
+        }
+
+        /* Achtergrond met vallende neon letters */
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+            font-size: 20px;
+            white-space: nowrap;
+            filter: blur(5px);
+        }
+
+        .letter {
+            position: absolute;
+            top: -50px;
+            color: rgba(179, 255, 0, 0.7);
+            text-shadow: 0 0 10px rgba(179, 255, 0, 0.7);
+            animation: drop linear infinite;
+        }
+
+        @keyframes drop {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="container">
+        <h1>Brute Force</h1>
+        <p>We gaan een klein spel spelen om te begrijpen wat brute force betekent.</p>
+        <p>Brute force is als je alles probeert in te typen totdat je iets vindt dat werkt. Denk aan het proberen van alle mogelijke combinaties totdat je de juiste vindt.</p>
+        <p>Waarom gebruiken hackers brute force?</p>
+        <p>Hackers gebruiken brute force omdat het een manier is om wachtwoorden of geheime codes te kraken.</p>
+        <p>Probeer iets in het onderstaande veld in te voeren:</p>
+
+        <form id="inputForm">
+            <input type="text" id="inputField" placeholder="Gebruikersnaam" value="Coderdojo">
+            <input type="password" id="passwordInput" placeholder="Wachtwoord">
+            <button type="button" onclick="checkInput()">Inloggen</button>
+            <button type="button" id="hintButton" onclick="showHint()" disabled>Hint</button>
+        </form>
+
+        <div id="message"></div>
+    </div>
+
+    <script>
+        var a = 0, b = "RmxhZ3tNZWVyX2Rhbl8xMDBfdGVrZW5zfQ==", c = "R2VkdWxkIGlzIGVlbiBzY2hvbmUgemFhaw==";
+
+        function d(e) { return atob(e); }
+
+        function checkInput() {
+            var f = document.getElementById("inputField").value.trim(),
+                g = document.getElementById("passwordInput").value.trim(),
+                h = document.getElementById("message");
+
+            h.innerHTML = "";
+            if (g.length > 40) {
+                h.innerText = "Inloggen gelukt! " + d(b);
+            } else {
+                h.innerText = "Fout wachtwoord. Probeer het opnieuw.";
+            }
+
+            a++;
+            if (a === 7) {
+                document.getElementById("hintButton").removeAttribute("disabled");
+            }
+        }
+
+        function showHint() {
+            alert("Hint: " + d(c));
+        }
+
+        function generateLetters() {
+            const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            const background = document.querySelector('.background');
+            const numberOfLetters = 100;
+
+            for (let i = 0; i < numberOfLetters; i++) {
+                const letter = document.createElement('div');
+                letter.classList.add('letter');
+                letter.textContent = letters.charAt(Math.floor(Math.random() * letters.length));
+                letter.style.left = Math.random() * 100 + 'vw';
+                letter.style.fontSize = Math.random() * 20 + 20 + 'px';
+                letter.style.animationDuration = Math.random() * 3 + 2 + 's';
+                letter.style.animationDelay = Math.random() * 5 + 's';
+                background.appendChild(letter);
+            }
+        }
+
+        generateLetters();
+    </script>
+</body>
+</html>
