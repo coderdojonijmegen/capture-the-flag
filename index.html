@@ -79,6 +79,10 @@
             margin-bottom: 20px;
         }
 
+        a {
+            decoration: none;
+        }
+
         .hidden-message {
             opacity: 0; 
             transition: opacity 0.3s ease; 
@@ -117,7 +121,7 @@
         function revealFlag(elementId) {
             const element = document.getElementById(elementId);
             const encodedFlag = part1 + part2 + part3 + part4 + part5;
-            element.innerText = atob(encodedFlag); 
+            element.innerHTML = "<a class='hidden-message' href='" + encodedFlag + ".html'>" + atob(encodedFlag) + "</a>";
             element.style.display = 'inline'; 
         }
 

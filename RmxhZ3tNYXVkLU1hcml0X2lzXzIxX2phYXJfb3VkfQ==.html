@@ -133,9 +133,10 @@
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             const commonPasswords = ["welkom", "wachtwoord", "123456", "qwerty", "welkom123", "admin", "voetbal", "welcome", "monkey", "abc123", "123456789"];
+            const iets = 'RmxhZ3tHZWVuX3N0YW5kYWFyZF93YWNodHdvb3JkX21lZXJ9';
 
             if (username === 'coderdojo' && commonPasswords.includes(password)) {
-                document.getElementById('message').innerText = atob('RmxhZ3tHZWVuX3N0YW5kYWFyZF93YWNodHdvb3JkX21lZXJ9');
+                document.getElementById('message').innerHTML = "<a style='decoration: none; color: #dc3545;' href='" + iets + ".html'>" + atob(iets) + "</a>";
             } else {
                 incorrectAttempts++;
                 document.getElementById('message').innerText = 'Onjuist wachtwoord. Probeer het opnieuw.';

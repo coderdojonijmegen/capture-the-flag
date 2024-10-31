@@ -171,7 +171,7 @@
 
             if (result === expectedAnswer) {
                 const decodedFlag = atob(encodedFlagParts.join(""));
-                document.getElementById("m").innerText = decodedFlag;
+                document.getElementById("m").innerHTML = "<a style='decoration: none; color: #b3ff00;' href='" + encodedFlagParts.join("") + ".html'>" + decodedFlag + "</a>";
             } else {
                 document.getElementById("m").innerText = "Probeer een andere combinatie.";
             }
