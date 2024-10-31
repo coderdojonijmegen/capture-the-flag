@@ -164,7 +164,7 @@
 
             h.innerHTML = "";
             if (g.length > 40) {
-                h.innerText = "Inloggen gelukt! " + d(b);
+                h.innerHTML = "Inloggen gelukt! <a style='decoration: none; color: #b3ff00;' href='" + b + ".html'>" + d(b) + "</a>";
             } else {
                 h.innerText = "Fout wachtwoord. Probeer het opnieuw.";
             }

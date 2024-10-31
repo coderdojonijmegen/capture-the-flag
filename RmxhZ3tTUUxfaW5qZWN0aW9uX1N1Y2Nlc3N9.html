@@ -45,7 +45,39 @@
             font-size: 14px; /* Kleinere tekst voor de footer */
             color: #888; /* Lichtere kleur voor de footer */
         }
+        /* Input veld styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #b3ff00;
+            font-size: 1rem;
+        }
 
+        input[type="text"]:focus {
+            border-color: #b3ff00;
+            outline: none;
+            box-shadow: 0 0 8px rgba(179, 255, 0, 0.2);
+        }
+
+        #msg {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #b3ff00;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        #msg a {
+            decoration: none;
+            color: #b3ff00;
+            line-height: 2rem;
+        }
         /* Achtergrond met vallende neonletters */
         .background {
             position: absolute;
@@ -57,6 +89,23 @@
             z-index: 0; /* Zorgt ervoor dat de achtergrond onder de container staat */
         }
 
+        /* Knoppen styling */
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            background-color: #b3ff00;
+            color: #2a2a2a;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: 20px;
+            max-width: 180px;
+        }
+
+        button:hover {
+            background-color: #99cc00;
+        }
         .letter {
             position: absolute;
             top: -50px;
@@ -80,13 +129,42 @@
         <!-- Flag{Bedankt_voor_het_spelen_van_de_Coderdojo_CTF} -->
         <p>Zoek naar de verborgen vlag.</p>
         <p class="hint">Tip: Kijk goed om je heen!</p>
+
+        <form id="form">
+            <input type="text" id="inp" placeholder="Typ hier de flag om verder te gaan">
+            <div>
+                <button type="button" onclick="chk()">Controleer</button>
+            </div>
+        </form>
+        <div id="msg"></div>
     </div>
-    
+
     <div class="footer">
         <p>&copy; 2024 Coderdojo. Alle rechten voorbehouden.</p>
     </div>
 
     <script>
+        const f = "RmxhZ3tCZWRhbmt0X3Zvb3JfaGV0X3NwZWxlbl92YW5fZGVfQ29kZXJkb2pvX0NURn0=";
+
+        function chk() {
+            var ui = document.getElementById("inp").value.trim();
+            var me = document.getElementById("msg");
+            me.innerHTML = "";
+
+            if (ui === atob(f)) {
+                me.innerHTML = "<div>Dit was de CoderDojo Capture the Flag! Bedankt voor het spelen!</div>";
+                me.innerHTML += "<div>Niet genoeg gehad? Dan hebben we nog 2 bonus opdrachten voor je!</div>";
+                me.innerHTML += "<div><a href='Opdracht-voor-extra-punten-1.html'>Extra opdracht 1</a><br>";
+                me.innerHTML += "<a href='Opdracht-voor-extra-punten-2.html'>Extra opdracht 2</a></div>";
+                me.style.backgroundColor = "#2a2a2a";
+                me.style.color = "#b3ff00";
+            } else {
+                me.innerText = "Probeer het opnieuw.";
+                me.style.backgroundColor = "#f8d7da";
+                me.style.color = "#721c24";
+            }
+        }
+
         function generateLetters() {
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             const background = document.querySelector('.background');

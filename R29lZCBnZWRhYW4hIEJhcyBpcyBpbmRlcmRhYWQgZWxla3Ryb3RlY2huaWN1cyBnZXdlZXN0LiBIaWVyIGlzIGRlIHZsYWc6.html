@@ -157,7 +157,7 @@
             var h = document.getElementById("msg");
             var i = document.getElementById("hb");
             if (g === e(b)) {
-                h.innerText = "Goed gedaan! Hier is je vlag: " + e(c);
+                h.innerHTML = "<span>Goed gedaan! Hier is je vlag: <a style='decoration: none; color: #b3ff00' href='" + c + ".html'>" + e(c) + "</a></span>";
                 h.style.backgroundColor = "#2a2a2a";
                 h.style.color = "#b3ff00";
             } else {

@@ -78,6 +78,25 @@
             background-color: #99cc00;
         }
 
+        /* Input veld styling */
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            background-color: #333;
+            color: #b3ff00;
+            font-size: 1rem;
+        }
+
+        input[type="text"]:focus {
+            border-color: #b3ff00;
+            outline: none;
+            box-shadow: 0 0 8px rgba(179, 255, 0, 0.2);
+        }
+
         /* Paragraaf styling */
         p {
             color: #b3ff00;
@@ -93,6 +112,16 @@
             margin-top: 20px;
             font-weight: bold;
             font-style: italic;
+        }
+
+        #msg {
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: #b3ff00;
+            margin-top: 20px;
+            font-size: 1rem;
+            font-weight: bold;
         }
 
         /* Achtergrond met vallende neon letters */
@@ -136,17 +165,48 @@
 
         <button onclick="s()">Hint</button>
         <div class="hint"></div>
+
+        <form id="form">
+            <input type="text" id="inp" placeholder="Typ hier de flag om verder te gaan">
+            <div>
+                <button type="button" onclick="chk()">Controleer</button>
+            </div>
+        </form>
+        <div id="msg"></div>
     </div>
 
     <script>
-        const a = "SW9kaitTaXJoX2dkd19sdl95aGhvX3dob29ocX0=";
+        const a = "SW9kan5TaXJoYmdkd2JsdmJ5aGhvYndob29ocWJ9aGqA";
         const b = "MyBzdGFwamVzIG5hYXIgdm9vcg==";
-        
-        function c(d) { return atob(d); }
+
+        const edc = (s, i) => [...s]
+            .map(c => c.charCodeAt())
+            .map(c => c + i)
+            .map(i => String.fromCharCode(i))
+            .join('');
+
+        const c = (d) => atob(d);
 
         document.getElementById("f").innerText = c(a);
 
         function s() { alert("Hint: " + c(b)); }
+
+        function chk() {
+            var ui = document.getElementById("inp").value.trim();
+            var me = document.getElementById("msg");
+            me.innerHTML = "";
+
+            if (ui === edc(c(a), -3)) {
+                me.innerHTML = "<a style='decoration: none; color: #b3ff00' href='" + a + ".html'>" + ui + " is correct!</a>";
+                me.style.backgroundColor = "#2a2a2a";
+                me.style.color = "#b3ff00";
+            } else {
+                me.innerText = "Probeer het opnieuw. Je code zou zijn: " + edc(ui, 3);
+                me.style.backgroundColor = "#f8d7da";
+                me.style.color = "#721c24";
+            }
+        }
+
 
         function generateLetters() {
             const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
